@@ -1309,7 +1309,7 @@ GameObject:
   - component: {fileID: 113840385}
   - component: {fileID: 113840384}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7369,6 +7369,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842959607937d694980923efdbf1be49, type: 3}
+--- !u!1 &755356308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1096447523324598, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+  m_PrefabInstance: {fileID: 892388850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &755356312
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755356308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.6
+  m_Radius: 0.2
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &755356315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755356308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f7854512be0ca4ea21a1f8db99d093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &758974264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8368,6 +8403,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 494418, guid: 4205be626b3537247abd5784031b38a8, type: 3}
   m_PrefabInstance: {fileID: 874374066}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &892388850
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1096447523324598, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_Name
+      value: Zombie_girlA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 143.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 127.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223110139932608, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5bf0371def7888f48957200ca69c9760, type: 3}
 --- !u!4 &895189075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423378, guid: 668858859b92a4445a006a061069a91d, type: 3}
@@ -20619,6 +20711,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 113840386}
+    - target: {fileID: 4780454995854465957, guid: 0d539da7b7bd07b49a358f8c35275d18, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4828408721304059179, guid: 0d539da7b7bd07b49a358f8c35275d18, type: 3}
       propertyPath: m_Name
       value: Kazuko
