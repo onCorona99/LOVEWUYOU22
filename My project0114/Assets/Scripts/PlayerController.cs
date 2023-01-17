@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float attackDamage = 10f;
+
     public float moveSpeed = 5f;
 
     public Camera mainCamera;
@@ -15,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float GroundDistance;
     public LayerMask GroundMask;
 
+    public PlayerSwordAtk swordAtk;
+    public BoxCollider swordCollider;
 
     private Vector3 m_Velocity;
 
@@ -22,20 +27,61 @@ public class PlayerController : MonoBehaviour
 
     private float m_moveSpeed;
 
+    private bool canRotate = true;
+
     private CharacterController controller;
     private Animator animator;
+
+
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        // 绑定帧事件
+        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name.Equals("ATK1", System.StringComparison.OrdinalIgnoreCase))
+            {
+                AnimationEvent ae1 = new AnimationEvent() { functionName = "Begin_ATK1",time= 0f}; 
+                AnimationEvent ae2 = new AnimationEvent() { functionName = "PreInput_ATK1",time= clip.length*0.2f}; 
+                AnimationEvent ae3 = new AnimationEvent() { functionName = "End_ATK1",time= clip.length}; 
+                clip.AddEvent(ae1);
+                clip.AddEvent(ae2);
+                clip.AddEvent(ae3);
+            }
+        } 
     }
 
-    void Start()
+    // 帧事件
+    // 开始攻击时角色不可进行旋转 结束时解除限制
+    private void Begin_ATK1()
     {
-        
+        int tick = (int)DateTime.Now.Ticks;
+
+        swordAtk.SetCurAtk(new AttackCommand() { attackid = tick ,primaryDamage = attackDamage});
+        swordCollider.enabled = true;
+        canRotate = false;
+        Debug.Log($"Begin_ATK1 TICK:[{tick}]");
+
     }
 
+    // 帧事件
+    private void End_ATK1()
+    {
+        swordCollider.enabled = false;
+        canRotate = true;
+    }
+
+    // 帧事件
+    private void PreInput_ATK1()
+    {
+        Debug.Log("执行了ATK01");
+        animator.SetBool("NeedATK1", false);
+    }
+
+   
     void Update()
     {
         Rotate();
@@ -57,10 +103,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("攻击！");
             animator.SetBool("NeedATK1", true);
         }
-
+    
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("ATK1"))
+        {
+        }
 
         void SimGravity()
         {
@@ -77,6 +125,7 @@ public class PlayerController : MonoBehaviour
 
         void Rotate()
         {
+            if (!canRotate) return;
             // 旋转
             if (Input.GetKey(KeyCode.W))
             {
@@ -126,12 +175,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-    }
-
-    public void CastATK01()
-    {
-        Debug.Log("执行了ATK01");
-        animator.SetBool("NeedATK1", false);
     }
 
     private void OnGUI()
