@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+
+    public float Damage = 10f;
 
     public Camera mainCamera;
 
@@ -15,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float GroundDistance;
     public LayerMask GroundMask;
 
+    public PlayerSwordAtk sword;
 
     private Vector3 m_Velocity;
 
@@ -25,15 +29,50 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Animator animator;
 
+    private bool canRotate = true;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+
+        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name.Equals("Atk1"))
+            {
+                AnimationEvent ae1 = new AnimationEvent() { functionName = "AttackStart", time = 0f };
+                AnimationEvent ae2 = new AnimationEvent() { functionName = "PreInput", time = clip.length * 0.3f };
+                AnimationEvent ae3 = new AnimationEvent() { functionName = "AttackEnd", time = clip.length };
+                clip.AddEvent(ae1);
+                clip.AddEvent(ae2);
+                clip.AddEvent(ae3);
+            }
+        } 
     }
 
-    void Start()
+    // 帧事件调用
+    public void AttackStart()
     {
-        
+        canRotate = false;
+
+        int tick = (int)DateTime.Now.Ticks;
+        sword.gameObject.GetComponent<BoxCollider>().enabled = true;
+        sword.SetCurAtk(new AttackCommand() { attackid = tick, primaryDamage = Damage });
+    }
+
+    // 帧事件调用
+    public void PreInput()
+    {
+
+        animator.SetBool("NeedATK1", false);
+    }
+
+    // 帧事件调用
+    public void AttackEnd()
+    {
+        sword.gameObject.GetComponent<BoxCollider>().enabled = false;
+        canRotate = true;
     }
 
     void Update()
@@ -61,7 +100,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("NeedATK1", true);
         }
 
-
         void SimGravity()
         {
             // 模拟重力
@@ -77,6 +115,7 @@ public class PlayerController : MonoBehaviour
 
         void Rotate()
         {
+            if (!canRotate) return;
             // 旋转
             if (Input.GetKey(KeyCode.W))
             {
@@ -128,12 +167,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void CastATK01()
-    {
-        Debug.Log("执行了ATK01");
-        animator.SetBool("NeedATK1", false);
-    }
-
     private void OnGUI()
     {
         GUIStyle style_40_bold_rich = new GUIStyle() { fontSize = 40, fontStyle = FontStyle.Bold, richText = true };
@@ -142,13 +175,8 @@ public class PlayerController : MonoBehaviour
             $"<color=#ffff00>X:{Input.GetAxis("Horizontal")}\n" +
             $"Y:{Input.GetAxis("Vertical")}\n" +
             $"MoveSpeed:{m_moveSpeed}</color>", 
-            style_40_bold_rich);//屏幕的左上角为（0，0）点，Rect（x,y,w,h）
-        
-        
-        
-        
-        GUI.Label(new Rect(200, 200, 200, 200), "心平气和02");//屏幕的左上角为（0，0）点，Rect（x,y,w,h）
-                                                        // Debug.Log(Time.time);//这个测试在Console不停大打印了改变了的时间，证明了OnGUI会在每一帧被调用渲染。
+            style_40_bold_rich);
+       
         //if (GUI.Button(new Rect(0, 40, 40, 40), "按钮"))//点击的时候会返回true
         //{
         //    Debug.Log("被点击了");

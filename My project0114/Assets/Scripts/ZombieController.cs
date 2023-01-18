@@ -1,11 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieController : MonoBehaviour
 {
+    private float m_maxHealth = 100f;
+    private float m_curHealth = 100f;
+
+    public List<AttackCommand> AtkList = new List<AttackCommand>();
 
     private Animator animator;
+
+    public float MaxHealth { get => m_maxHealth; set => m_maxHealth = value; }
+    public float CurHealth { get => m_curHealth; set => m_curHealth = value; }
 
     private void Awake()
     {
@@ -26,5 +34,12 @@ public class ZombieController : MonoBehaviour
             //animator.SetBool("IsDead", true);
             animator.SetTrigger("IsDead");
         }
+    }
+
+    public void OnReceiveAnAttack(AttackCommand curAtkCmd)
+    {
+        AtkList.Add(curAtkCmd);
+        m_curHealth -= curAtkCmd.primaryDamage;
+        Debug.Log($"当前生命值为:[{m_curHealth}]");
     }
 }
