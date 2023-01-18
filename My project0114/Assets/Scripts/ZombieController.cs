@@ -31,7 +31,6 @@ public class ZombieController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            //animator.SetBool("IsDead", true);
             animator.SetTrigger("IsDead");
         }
     }
