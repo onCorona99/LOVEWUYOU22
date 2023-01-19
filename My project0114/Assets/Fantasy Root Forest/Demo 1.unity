@@ -20626,6 +20626,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 877569721121629701, guid: 197fdff189f035f42978abb1de1a7f79, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 877569721121629701, guid: 197fdff189f035f42978abb1de1a7f79, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9c56ffd673117b4bb759fe16d7dbf07, type: 2}
     - target: {fileID: 992935353287303561, guid: 197fdff189f035f42978abb1de1a7f79, type: 3}
       propertyPath: m_Name
       value: Zombie_girlA
