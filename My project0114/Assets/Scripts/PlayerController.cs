@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance { get; private set; }
+
     public float moveSpeed = 5f;
 
     public float Damage = 10f;
@@ -31,12 +33,27 @@ public class PlayerController : MonoBehaviour
 
     private bool canRotate = true;
 
+    public void Destroy()
+    {
+        instance = null;
+        Destroy(gameObject);
+    }
+
     private void Awake()
     {
+        // 单例
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+
+        // 组件
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-
+        // 绑定动画帧事件
         foreach (var clip in animator.runtimeAnimatorController.animationClips)
         {
             if (clip.name.Equals("Atk1"))
@@ -64,7 +81,6 @@ public class PlayerController : MonoBehaviour
     // 帧事件调用
     public void PreInput()
     {
-
         animator.SetBool("NeedATK1", false);
     }
 
@@ -96,8 +112,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("攻击！");
-            animator.SetBool("NeedATK1", true);
+            PressKeyCode(KeyCode.Alpha1);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            UpKeyCode(KeyCode.Alpha1);
+            Attack();
         }
 
         void SimGravity()
@@ -167,11 +187,28 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void PressKeyCode(KeyCode keyCode)
+    {
+        MainPanel.PressBtnSk(keyCode);
+    }
+
+    public void UpKeyCode(KeyCode keyCode)
+    {
+        MainPanel.UpBtnSk(keyCode);
+    }
+
+    public void Attack()
+    {
+        //UIManager.in
+        Debug.Log("攻击！");
+        animator.SetBool("NeedATK1", true);
+    }
+
     private void OnGUI()
     {
         GUIStyle style_40_bold_rich = new GUIStyle() { fontSize = 40, fontStyle = FontStyle.Bold, richText = true };
 
-        GUI.Label(new Rect(100, 100, 100, 100), 
+        GUI.Label(new Rect(1620, 60, 100, 100), 
             $"<color=#ffff00>X:{Input.GetAxis("Horizontal")}\n" +
             $"Y:{Input.GetAxis("Vertical")}\n" +
             $"MoveSpeed:{m_moveSpeed}</color>", 
