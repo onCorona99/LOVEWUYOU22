@@ -7420,12 +7420,8 @@ MonoBehaviour:
   SliderGO: {fileID: 2141207909}
   m_viewRadius: 100
   m_attackRadius: 2
-  GroundCheck: {fileID: 1156595472}
-  GroundDistance: 1
-  GroundMask:
-    serializedVersion: 2
-    m_Bits: 128
   Gravity: 20
+  m_canRotate: 1
 --- !u!195 &992050067647604434
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -140,6 +140,8 @@ public class PlayerController : MonoBehaviour
         Attack();
 
         DetectEnemyAround();
+
+    
     }
 
     private void DetectEnemyAround()

@@ -138,19 +138,17 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (SliderGO.activeSelf)
-            {
-                SliderGO.SetActive(false);
-            }
-            else
-            {
-                SliderGO.SetActive(true);
-            }
-        }
-
-        
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    if (SliderGO.activeSelf)
+        //    {
+        //        SliderGO.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        SliderGO.SetActive(true);
+        //    }
+        //}
     }
 
     private void LateUpdate()

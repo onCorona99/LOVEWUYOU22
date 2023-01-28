@@ -19,6 +19,8 @@ public class BattleManager : MonoBehaviour
 
     public Transform zombieRoot;
 
+
+
     public void Destroy()
     {
         if (instance != null)
