@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 /// <summary>
 /// 后续使用对象池
@@ -85,14 +85,19 @@ public class BattleManager : MonoBehaviour
         LayerMask mask = 1 << 7;
         Physics.Raycast(xzPos, Vector3.down, out var hitInfo, 2000f, mask);
         Vector3 pos  = new Vector3(xzPos.x, hitInfo.point.y + zombieCylinderHeight/2 + 0.1f, xzPos.z);
-        Debug.Log($"射线检测击中的位置为{pos}");
+        //Debug.Log($"射线检测击中的位置为{pos}");
 
         // 如果生在树上 重新射 直到生在地上 返回地上的正确位置
-        while (hitInfo.collider.gameObject.CompareTag("Tree"))
+        if (hitInfo.collider.gameObject.CompareTag("Tree"))
         {
             pos = GetSpawnPos();
         }
-
+        // 同样 不能出生在 Navemesh不可移动的位置上 返回false说明采样失败 我们就重新生成位置
+        bool isInCanMoveArea = NavMesh.SamplePosition(pos, out var hit, 1f , 1);
+        if (!isInCanMoveArea)
+        {
+            pos = GetSpawnPos();
+        }
         return pos;
     }
 

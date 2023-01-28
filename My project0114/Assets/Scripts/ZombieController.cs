@@ -42,6 +42,7 @@ public class ZombieController : MonoBehaviour
 
     private float m_atkAnimLenght;
 
+    [SerializeField]
     private bool m_canRotate = true;
 
     private bool m_isDead;
@@ -139,7 +140,14 @@ public class ZombieController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            transform.LookAt(PlayerController.instance.transform);
+            if (SliderGO.activeSelf)
+            {
+                SliderGO.SetActive(false);
+            }
+            else
+            {
+                SliderGO.SetActive(true);
+            }
         }
 
         
@@ -170,6 +178,7 @@ public class ZombieController : MonoBehaviour
             m_isDead = true;
             animator.SetBool("IsDead",true);
             BattleManager.instance.zombieList.Remove(this);
+            SliderGO.SetActive(false);
         }
     }
 
