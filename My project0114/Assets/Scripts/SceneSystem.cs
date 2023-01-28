@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public abstract class SceneBase
 {
@@ -41,6 +42,8 @@ public class StartScene : SceneBase
         {
             SceneManager.LoadScene(PathManager.StartScene);
             SceneManager.sceneLoaded += SceneLoaded;
+            GameObject BG =  GameUtility.FindChild(MyCanvas.instance.gameObject, "BG");
+            BG.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
         else PanelStack.Instance.Push(new StartPanel());
     }
@@ -68,6 +71,8 @@ public class MainScene : SceneBase
         {
             SceneManager.LoadScene(PathManager.MainScene);
             SceneManager.sceneLoaded += SceneLoaded;
+            GameObject BG =  GameUtility.FindChild(MyCanvas.instance.gameObject, "BG");
+            BG.GetComponent<Image>().color = new Color(1, 1, 1, 0);
         }
         else PanelStack.Instance.Push(new MainPanel());
     }

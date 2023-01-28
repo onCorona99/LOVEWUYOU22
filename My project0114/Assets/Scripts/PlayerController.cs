@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
     // 帧事件调用
     public void AttackStart()
     {
+        Debug.Log("ZZK ATK STA");
         canRotate = false;
 
         int tick = (int)DateTime.Now.Ticks;
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour
     // 帧事件调用
     public void AttackEnd()
     {
+        Debug.Log("ZZK ATK END");
         //sword.collider.enabled = false;
         canRotate = true;
 
@@ -173,7 +175,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         //绘制球形线框范围
         Gizmos.DrawWireSphere(transform.position, detect_radius);
     }

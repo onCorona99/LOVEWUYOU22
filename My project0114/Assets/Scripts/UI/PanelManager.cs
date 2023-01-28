@@ -40,8 +40,9 @@ public class PanelManager
     public GameObject ShowPanel(PanelType type)
     {
         //将画布指定为面板的父对象
-        GameObject parent = GameObject.Find("Canvas");
-        if (!parent)
+        GameObject canvas = GameObject.Find("Canvas");
+
+        if (!canvas)
         {
             UnityEngine.Debug.Log("Error:画布不存在");
             return null;
@@ -50,7 +51,7 @@ public class PanelManager
         if (panelDict.ContainsKey(type))
             return panelDict[type];
         //将指定的面板克隆到画布上
-        GameObject panel = GameObject.Instantiate(Resources.Load<GameObject>(type.Path), parent.transform);
+        GameObject panel = GameObject.Instantiate(Resources.Load<GameObject>(type.Path), canvas.transform);
         //设定面板对象的名字
         panel.name = type.Name;
         //加入字典

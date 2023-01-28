@@ -44,6 +44,10 @@ public class PlayerSwordAtk : MonoBehaviour
     {
         foreach (var item in BattleManager.instance.zombieList)
         {
+            if (item.AtkList.Contains(curAtkCmd))
+                continue;
+            if (!item.CanReceiveDamage)
+                continue;
             Vector3 playerPosV3 = PlayerController.instance.gameObject.transform.position;
             Vector3 enemyPosV3 = item.transform.position;
 
@@ -61,8 +65,7 @@ public class PlayerSwordAtk : MonoBehaviour
                 if (deltaY < deltaYLimitValue)
                 {
                     // 说明在一次攻击指令中 触发器与僵尸进行了多次触发 直接返回
-                    if (item.AtkList.Contains(curAtkCmd))
-                        return;
+
                     Debug.Log($"{item.gameObject.name}被击打了");
                     item.OnReceiveAnAttack(curAtkCmd);
                 }

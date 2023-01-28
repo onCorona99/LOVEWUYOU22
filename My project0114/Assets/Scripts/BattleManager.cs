@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
 
     public List<ZombieController> zombieList = new List<ZombieController>();
 
+    public GameObject zombiePrefab;
 
     public void Destroy()
     {
