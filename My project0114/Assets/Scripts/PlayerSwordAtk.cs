@@ -42,8 +42,9 @@ public class PlayerSwordAtk : MonoBehaviour
     /// </summary>
     public void DoAttack(float atkRadius, float atkHeight)
     {
-        foreach (var item in BattleManager.instance.zombieList)
+        for (int i = 0; i < BattleManager.instance.zombieList.Count; i++)
         {
+            var item = BattleManager.instance.zombieList[i];
             if (item.AtkList.Contains(curAtkCmd))
                 continue;
             if (!item.CanReceiveDamage)

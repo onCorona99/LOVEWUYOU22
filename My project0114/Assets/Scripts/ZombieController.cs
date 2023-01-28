@@ -25,11 +25,11 @@ public class ZombieController : MonoBehaviour
 
 
 
-    private bool m_IsGrounded;
+    //private bool m_IsGrounded;
 
-    public Transform GroundCheck;// 需要检测和是否和地面接触的物体
-    public float GroundDistance;
-    public LayerMask GroundMask;
+    //public Transform GroundCheck;// 需要检测和是否和地面接触的物体
+    //public float GroundDistance;
+    //public LayerMask GroundMask;
 
     public float Gravity = 20f;
 
@@ -105,17 +105,15 @@ public class ZombieController : MonoBehaviour
     // 帧事件调用
     private void AttackStart()
     {
-        //transform.LookAt(PlayerController.instance.gameObject.transform);
         m_canRotate = false;
 
-        //agent.updateRotation = true;
+        animator.rootRotation = Quaternion.LookRotation(PlayerController.instance.gameObject.transform.position - this.transform.position);
 
         //Quaternion dir = Quaternion.LookRotation(PlayerController.instance.gameObject.transform.position - this.transform.position);
         ////this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, dir, 1f);
         //this.transform.rotation = dir;
 
-
-        Debug.Log($"执行了AttackStart {animator.GetCurrentAnimatorStateInfo(0).speed} {animator.GetLayerIndex("Animations")} ");
+        Debug.Log($"执行了AttackStart");
     }
 
     private void PreInput()
@@ -127,7 +125,6 @@ public class ZombieController : MonoBehaviour
     {
         m_canRotate = true;
 
-        //agent.updateRotation = false;
         Debug.Log("执行了AttackEnd");
     }
 
@@ -142,9 +139,14 @@ public class ZombieController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            animator.SetBool("IsDead",true);
+            transform.LookAt(PlayerController.instance.transform);
         }
 
+        
+    }
+
+    private void LateUpdate()
+    {
         if (SliderGO.activeInHierarchy)
         {
             SliderGO.transform.LookAt(PlayerController.instance.mainCamera.transform);
@@ -167,6 +169,7 @@ public class ZombieController : MonoBehaviour
             CanReceiveDamage = false;
             m_isDead = true;
             animator.SetBool("IsDead",true);
+            BattleManager.instance.zombieList.Remove(this);
         }
     }
 
@@ -174,6 +177,18 @@ public class ZombieController : MonoBehaviour
     {
         SliderGO.SetActive(status);
     }
+
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Zombie被销毁乐");
+    }
+
 
     private void OnDrawGizmos()
     {
@@ -186,15 +201,5 @@ public class ZombieController : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 5f);
-    }
-
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        Debug.Log("Zombie被销毁乐");
     }
 }

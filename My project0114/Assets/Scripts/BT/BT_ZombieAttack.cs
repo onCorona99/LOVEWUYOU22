@@ -29,10 +29,11 @@ public class BT_ZombieAttack : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (startTime + AtkAnimClipLength < Time.time)
-        {
-            return TaskStatus.Success;
-        }
+
+        //if (startTime + AtkAnimClipLength < Time.time)
+        //{
+        //    return TaskStatus.Success;
+        //}
         return TaskStatus.Running;
     }
 

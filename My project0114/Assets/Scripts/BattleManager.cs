@@ -15,6 +15,10 @@ public class BattleManager : MonoBehaviour
 
     public GameObject zombiePrefab;
 
+    public float zombieCylinderHeight;
+
+    public Transform zombieRoot;
+
     public void Destroy()
     {
         if (instance != null)
@@ -38,6 +42,74 @@ public class BattleManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        zombieCylinderHeight = zombiePrefab.GetComponent<ZombieController>().CylinderHeight;
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        int wholePart = Mathf.FloorToInt(Time.time);
+        int fractPart = Mathf.FloorToInt((Time.time - wholePart) * 100);
+
+        int minutesNum = wholePart / 60;
+        wholePart %= 60;
+
+        // 前两分钟
+        if (minutesNum < 2)
+        {
+            if(Time.frameCount % (60 * 6) == 0)
+            {
+                GameObject zombie = Instantiate(zombiePrefab, GetSpawnPos(), Quaternion.identity, zombieRoot);
+                Debug.Log("生成了一个");
+                zombieList.Add(zombie.GetComponent<ZombieController>());
+            }
+        }
+    }
+
+    public Vector3 GetSpawnPos()
+    {
+        PlayerController player = PlayerController.instance;
+
+        float randomDist = UnityEngine.Random.Range(player.spawnEnemyInnerRadius, player.spawnEnemyOutterRadius);
+        float randomAngle = UnityEngine.Random.Range(0f, 2f);
+        float Xoffset = Mathf.Cos(randomAngle * Mathf.PI) * randomDist;
+        float Zoffset = Mathf.Sin(randomAngle * Mathf.PI) * randomDist;
+        Vector3 xzPos = new Vector3(Xoffset + player.transform.position.x, 1000f, Zoffset+ player.transform.position.z);
+
+        // 射线检测得到Y轴坐标
+        LayerMask mask = 1 << 7;
+        Physics.Raycast(xzPos, Vector3.down, out var hitInfo, 2000f, mask);
+        Vector3 pos  = new Vector3(xzPos.x, hitInfo.point.y + zombieCylinderHeight/2 + 0.1f, xzPos.z);
+        Debug.Log($"射线检测击中的位置为{pos}");
+
+        // 如果生在树上 重新射 直到生在地上 返回地上的正确位置
+        while (hitInfo.collider.gameObject.CompareTag("Tree"))
+        {
+            pos = GetSpawnPos();
+        }
+
+        return pos;
+    }
+
+    private void OnGUI()
+    {
+        GUIStyle style_32_bold_rich = new GUIStyle() { fontSize = 32, fontStyle = FontStyle.Bold, richText = true };
+
+        int wholePart = Mathf.FloorToInt(Time.time);
+        int fractPart = Mathf.FloorToInt((Time.time - wholePart) * 100);
+
+        int minutesNum = wholePart / 60;
+        wholePart %= 60;
+
+        string secNum = wholePart < 10 ? $"0{wholePart}" : $"{wholePart}";
+        string minNum = minutesNum < 10 ? $"0{minutesNum}" : $"{minutesNum}";
+
+        GUI.Label(new Rect(Screen.width/2.0f, 60, 100, 100),$"{minNum}:{secNum}:{fractPart}\nDPI:{Screen.dpi}", style_32_bold_rich);
     }
 
 

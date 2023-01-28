@@ -10,16 +10,19 @@ public class BT_LookAtTarget : Action
 {
     public SharedGameObject target;
 
+    public SharedMonoBehaviour mono;
 
+    private ZombieController controller;
 
     public override void OnAwake()
     {
-
+        controller = mono.Value as ZombieController;
     }
 
     public override void OnStart()
     {
-        transform.LookAt(target.Value.transform);
+        if (controller.CanRotate)
+            transform.LookAt(target.Value.transform);
     }
 
     public override TaskStatus OnUpdate()

@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
     public float detect_radius = 5f;
 
+    public float spawnEnemyOutterRadius = 40f;
+    public float spawnEnemyInnerRadius = 20f;
+
     private Vector3 m_Velocity;
 
     private bool m_IsGrounded;
@@ -169,17 +172,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// 在编辑器里绘制Gizmos(一般用于scene窗口中便于观看，实际运行中可注释或删除)
-    /// </summary>
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        //绘制球形线框范围
-        Gizmos.DrawWireSphere(transform.position, detect_radius);
-    }
-
     private void DoAnimMove()
     {
         float xaxis = Input.GetAxis("Horizontal");
@@ -306,4 +298,19 @@ public class PlayerController : MonoBehaviour
         //    Debug.Log("被点击了");
         //}
     }
+
+    /// <summary>
+    /// 在编辑器里绘制Gizmos(一般用于scene窗口中便于观看，实际运行中可注释或删除)
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        //绘制球形线框范围
+        Gizmos.DrawWireSphere(transform.position, detect_radius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, spawnEnemyOutterRadius);
+
+    }
+
 }

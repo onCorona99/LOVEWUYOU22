@@ -1587,7 +1587,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ea5f5c5be164afe44aed5ca0c970ae42, type: 2}
-  - {fileID: 2100000, guid: f9c56ffd673117b4bb759fe16d7dbf07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7338,7 +7337,7 @@ GameObject:
   - component: {fileID: 992050068100772949}
   - component: {fileID: 992050068100772950}
   - component: {fileID: 992050067647604434}
-  - component: {fileID: 992050067647604438}
+  - component: {fileID: 992050067647604437}
   m_Layer: 11
   m_Name: Zombie_girlA
   m_TagString: Zombie
@@ -7380,7 +7379,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 313f7e78091323e479e5218404474d20, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -7417,7 +7416,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f7854512be0ca4ea21a1f8db99d093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_maxHealth: 100
   SliderGO: {fileID: 2141207909}
+  m_viewRadius: 100
+  m_attackRadius: 2
   GroundCheck: {fileID: 1156595472}
   GroundDistance: 1
   GroundMask:
@@ -7434,10 +7436,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 480
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -7446,7 +7448,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &992050067647604438
+--- !u!114 &992050067647604437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7465,7 +7467,7 @@ MonoBehaviour:
   logTaskChanges: 0
   group: 0
   resetValuesOnRestart: 0
-  externalBehavior: {fileID: 11400000, guid: a7dfb9b37f8cbb24bab1d24aa8ea8535, type: 2}
+  externalBehavior: {fileID: 11400000, guid: 27519cab8480ec34cbff9140f0984b23, type: 2}
   mBehaviorSource:
     behaviorName: Behavior
     behaviorDescription: 
@@ -7474,7 +7476,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"TargetGO","IsShared":true}]}'
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedMonoBehaviour","Name":"ZombieMono","IsShared":true}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
