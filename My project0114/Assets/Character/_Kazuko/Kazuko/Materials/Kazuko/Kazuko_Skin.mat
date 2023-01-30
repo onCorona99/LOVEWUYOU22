@@ -37,6 +37,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveTex:
+        m_Texture: {fileID: 2800000, guid: fecbc2dbf76d9ab4089330c3e5ee2423, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -83,6 +87,7 @@ Material:
     - _Cutoff: 0.5
     - _DepthBias: 0.00012
     - _DetailNormalMapScale: 1
+    - _DissolveThreshold: 0
     - _DstBlend: 0
     - _EdgeThickness: 3
     - _GlossMapScale: 1

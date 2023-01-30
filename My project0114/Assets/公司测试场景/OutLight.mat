@@ -71,7 +71,7 @@ Material:
     - _OutLightPow: 5
     - _OutLightStrength: 15
     - _Parallax: 0.02
-    - _RimStrength: 0.1
+    - _RimStrength: 2.02
     - _Size: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularGlass: 32

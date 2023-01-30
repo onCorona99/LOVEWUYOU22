@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 缓存器容量
     /// </summary>
-    public const int MAX_COUNT = 10;
+    public const int MAX_COUNT = 100;
     /// <summary>
     /// 缓存处在检测范围内的碰撞体
     /// </summary>
@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour
 
     private void DetectEnemyAround()
     {
-        // 每60帧执行一次
         if(Time.frameCount%60 == 0)
         {
             //Debug.Log("检测周围敌人中");

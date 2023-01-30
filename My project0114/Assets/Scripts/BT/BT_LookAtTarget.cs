@@ -21,7 +21,7 @@ public class BT_LookAtTarget : Action
 
     public override void OnStart()
     {
-        if (controller.CanRotate)
+        //if (controller.CanRotate)
             transform.LookAt(target.Value.transform);
     }
 

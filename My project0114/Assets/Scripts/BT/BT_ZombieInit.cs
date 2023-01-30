@@ -17,9 +17,10 @@ public class BT_ZombieInit : Action
     public override void OnAwake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
+        //agent.updateRotation = false;
+        //agent.updatePosition = false;
 
-        
+
     }
 
     public override void OnStart()

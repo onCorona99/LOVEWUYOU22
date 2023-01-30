@@ -7,42 +7,27 @@ public class BT_ZombieAttack : Action
 {
     private Animator animator;
 
-    private float AtkAnimClipLength;
-
-    private float startTime;
-
     public override void OnAwake()
     {
         animator = GetComponent<Animator>();
 
-        AtkAnimClipLength = GetComponent<ZombieController>().AtkAnimLenght;
     }
 
     public override void OnStart()
     {
-        Debug.Log("ZombieAttack OnStart");
-        //transform.LookAt(PlayerController.instance.transform);
+        Debug.Log("<color=#ffccff>[BT]OnStart  ZombieAttack</color>");
         animator.SetBool("IsAttacking", true);
-
-        startTime = Time.time;
     }
 
     public override TaskStatus OnUpdate()
     {
-
-        //if (startTime + AtkAnimClipLength < Time.time)
-        //{
-        //    return TaskStatus.Success;
-        //}
         return TaskStatus.Running;
     }
 
     public override void OnEnd()
     {
-        Debug.Log("ZombieAttack OnEnd");
+        Debug.Log("<color=#ffccff>[BT]OnEnd  ZombieAttack</color>");
         animator.SetBool("IsAttacking", false);
-
-        startTime = 0f;
     }
 
     public override void OnReset()

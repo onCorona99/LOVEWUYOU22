@@ -7353,7 +7353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992935353287303561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 143.43, y: 16.59, z: 127.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7416,12 +7416,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f7854512be0ca4ea21a1f8db99d093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 100
+  m_maxHealth: 30
   SliderGO: {fileID: 2141207909}
+  HUD_GO: {fileID: 717853023}
   m_viewRadius: 100
   m_attackRadius: 2
   Gravity: 20
-  m_canRotate: 1
 --- !u!195 &992050067647604434
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7433,10 +7433,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 3
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 480
-  m_StoppingDistance: 0
+  m_AngularSpeed: 720
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

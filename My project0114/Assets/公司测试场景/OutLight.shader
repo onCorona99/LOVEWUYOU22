@@ -23,9 +23,9 @@ Shader "Custom/OutLight"
             Name "AtmosphereBase"
             Tags{ "LightMode" = "Always" }
             
-            Cull Front
-            Blend SrcAlpha One
-            // Blend One OneMinusSrcAlpha
+            Cull front
+            // Blend SrcAlpha One
+            Blend One OneMinusSrcAlpha
             ZWrite off
 
             CGPROGRAM

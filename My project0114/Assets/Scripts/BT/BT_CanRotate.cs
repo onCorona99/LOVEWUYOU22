@@ -12,7 +12,7 @@ public class BT_CanRotate : Action
 
     public override TaskStatus OnUpdate()
     {
-        transform.GetComponent<ZombieController>().CanRotate = canRotate.Value;
+        //transform.GetComponent<ZombieController>().CanRotate = canRotate.Value;
 
         return TaskStatus.Success;
     }

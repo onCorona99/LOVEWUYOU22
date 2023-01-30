@@ -28,7 +28,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
         public override void OnStart()
         {
-            SetDestination(Target());
+            //SetDestination(Target());
             animator.SetBool("IsWalking", true);
         }
 
@@ -40,13 +40,27 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
         public override TaskStatus OnUpdate()
         {
-            if (controller.CanRotate)
-                transform.LookAt(target.Value.transform);
-
-            if (Time.frameCount % 60 == 0)
+            // 动画还在 攻击的时候就不设置目标点 在帧事件中设置
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
-                SetDestination(Target());
+                return TaskStatus.Running;
             }
+
+            if (Time.frameCount % 20 == 0)
+            {
+                if (!SetDestination(Target()))
+                {
+                    Debug.Log($"<color=#ff0000>没有正确寻路 pending:{agent.pathPending}</color>");
+                }
+            }
+
+            if (Time.frameCount % 22 == 0)
+            {
+                // 这样就可以放置错误寻路 错误的目的地了...
+                agent.enabled = false;
+                agent.enabled = true;
+            }
+
             return TaskStatus.Running;
         }
         private bool SetDestination(Vector3 destination)

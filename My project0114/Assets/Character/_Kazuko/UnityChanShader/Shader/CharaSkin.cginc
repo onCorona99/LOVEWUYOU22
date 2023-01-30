@@ -18,6 +18,11 @@ sampler2D _MainTex;
 sampler2D _FalloffSampler;
 sampler2D _RimLightSampler;
 
+sampler2D _DissolveTex;
+
+float _DissolveThreshold;
+float _Width;
+
 // Constants
 #define FALLOFF_POWER 1.0
 
@@ -78,6 +83,10 @@ v2f vert( appdata_base v )
 // Fragment shader
 float4 frag( v2f i ) : COLOR
 {
+ 	// float4 dissolveColor = tex2D(_DissolveTex, i.uv);
+    // clip(dissolveColor.rgb - _DissolveThreshold);
+
+
 	float4_t diffSamplerColor = tex2D( _MainTex, i.uv );
 
 	// Falloff. Convert the angle between the normal and the camera direction into a lookup for the gradient
@@ -100,6 +109,10 @@ float4 frag( v2f i ) : COLOR
 	float_t attenuation = saturate( 2.0 * LIGHT_ATTENUATION( i ) - 1.0 );
 	combinedColor = lerp( shadowColor, combinedColor, attenuation );
 #endif
+
+	// fixed2 rampUV = smoothstep(_DissolveThreshold,_DissolveThreshold + _Width,dissolveColor.r);
+	// fixed4 dissRamp = tex2D(_MainTex,rampUV);
+	// combinedColor = combinedColor + dissRamp.rgb;
 
 	return float4_t( combinedColor, diffSamplerColor.a ) * _Color * _LightColor0;
 }
