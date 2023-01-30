@@ -17547,6 +17547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Riko_Bikini
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013410010452, guid: 8f5f2c6ecdcca244faba6b6f7a5c11d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000010186136438, guid: 8f5f2c6ecdcca244faba6b6f7a5c11d8, type: 3}
       propertyPath: m_RootOrder
       value: 14
