@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 这个EventTrigger 继承自Unity的EventTrigger 会使得如果只给gameObject注册了点击的话
+/// 这个go是不可以被拖拽的
+/// </summary>
 public class UIEventTriggerListener : EventTrigger
 {
     public delegate void VoidDelegate(GameObject go);

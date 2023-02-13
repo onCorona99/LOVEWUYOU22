@@ -14,6 +14,12 @@ public class MainPanel : BasePanel
         public GameObject Btn_Skill1;
         public GameObject Btn_Skill2;
         public GameObject Btn_Skill3;
+
+        public Image HeadIcon;
+        public Text LevelText;
+        public Text NameText;
+        public Text GoldCountText;
+        public Text IDText;
     }
 
     public static Controls m_ctl;
@@ -53,6 +59,12 @@ public class MainPanel : BasePanel
     public override void OnEnter()
     {
         base.OnEnter();
+        var Info = GameManager.instance.CurrentPlayerInfo;
+        m_ctl.NameText.text = Info.Name;
+        m_ctl.GoldCountText.text = $"{Info.GoldCount}G";
+        m_ctl.LevelText.text = Info.Level.ToString();
+        m_ctl.IDText.text = $"ID:{Info.ID}";
+        m_ctl.HeadIcon.sprite = Resources.Load<Sprite>($"Pic/HeadPortrait/{Info.HeadImgPath}");
     }
 
     public override void Serializable()

@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance { get; private set; }
 
+    public UICommonPopUp UICommonPopUp;
+
     private void Awake()
     {
         // µ¥Àý
@@ -17,9 +19,10 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void Attack()
+    public void ShowUICommonPopUp(string str)
     {
-
+       
+        UICommonPopUp.SetTextShow(str);
     }
    
 }

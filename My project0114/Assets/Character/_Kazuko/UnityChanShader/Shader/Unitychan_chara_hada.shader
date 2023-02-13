@@ -13,6 +13,9 @@ Shader "UnityChan/Skin"
 
 		_DissolveTex("溶解噪声图",2D) = "white"{}
 		_DissolveThreshold("溶解阈值",Range(0.0,1)) = 0
+
+		_RampTex ("渐变纹理 用于溶解",2D) = ""{}
+
 	}
 
 	SubShader
@@ -39,18 +42,18 @@ Shader "UnityChan/Skin"
 			ENDCG
 		}
 		// 描边pass
-		Pass
-		{
-			Cull Front
-			ZTest Less
-			CGPROGRAM
-			#pragma target 3.0
-			#pragma vertex vert
-			#pragma fragment frag
-			#include "UnityCG.cginc"
-			#include "CharaOutline.cginc"
-			ENDCG
-		}
+		// Pass
+		// {
+		// 	Cull Front
+		// 	ZTest Less
+		// 	CGPROGRAM
+		// 	#pragma target 3.0
+		// 	#pragma vertex vert
+		// 	#pragma fragment frag
+		// 	#include "UnityCG.cginc"
+		// 	#include "CharaOutline.cginc"
+		// 	ENDCG
+		// }
 	}
 
 	FallBack "Transparent/Cutout/Diffuse"

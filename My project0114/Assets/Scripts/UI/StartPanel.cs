@@ -50,13 +50,13 @@ public class StartPanel : BasePanel
         PanelManager.Instance.DestroyPanel(this.PanelType);
     }
 
-    public override void OnPause()
-    {
-        PanelExtensionTool.GetOrAddComponent<CanvasGroup>().blocksRaycasts = false;
-    }
+    //public override void OnPause()
+    //{
+    //    base.OnPause();
+    //}
 
-    public override void OnResume()
-    {
-        PanelExtensionTool.GetOrAddComponent<CanvasGroup>().blocksRaycasts = true;
-    }
+    //public override void OnResume()
+    //{
+    //    base.OnResume();
+    //}
 }

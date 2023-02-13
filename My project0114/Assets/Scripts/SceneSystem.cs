@@ -86,6 +86,7 @@ public class MainScene : SceneBase
 
     void SceneLoaded(Scene scene, LoadSceneMode load)
     {
+        Debug.Log("<color=#ff0000>Main Scene Loaded</color>");
         PanelStack.Instance.Push(new MainPanel());
     }
 }

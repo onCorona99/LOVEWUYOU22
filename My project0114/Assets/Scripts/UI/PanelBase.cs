@@ -1,6 +1,11 @@
+using UnityEngine;
+
 public class BasePanel
 {
     public PanelType PanelType { get; private set; }
+
+    public bool isVisibleWhenPause;
+    public bool isActiableWhenPause;
 
     public BasePanel(PanelType panelType)
     {
@@ -22,9 +27,19 @@ public class BasePanel
         InitListener();
     }
 
-    public virtual void OnPause() { }
+    public virtual void OnPause() 
+    {
+        var canvasGroup = PanelExtensionTool.GetOrAddComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = isVisibleWhenPause ? 1 : 0;
+    }
 
-    public virtual void OnResume() { }
+    public virtual void OnResume() 
+    {
+        var canvasGroup = PanelExtensionTool.GetOrAddComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1;
+    }
 
     public virtual void OnExit() { }
 }

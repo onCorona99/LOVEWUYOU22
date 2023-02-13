@@ -7399,9 +7399,9 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1.6
   m_Radius: 0.2
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SlopeLimit: 60
+  m_StepOffset: 0.75
+  m_SkinWidth: 0.1
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &992050068100772950
@@ -7417,10 +7417,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 30
+  m_curHealth: 100
   SliderGO: {fileID: 2141207909}
   HUD_GO: {fileID: 717853023}
   m_viewRadius: 100
-  m_attackRadius: 2
+  m_attackRadius: 1.5
   Gravity: 20
 --- !u!195 &992050067647604434
 NavMeshAgent:
@@ -7433,13 +7434,13 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 3
-  m_Acceleration: 20
+  m_Acceleration: 999
   avoidancePriority: 50
-  m_AngularSpeed: 720
+  m_AngularSpeed: 999
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 1.6
   m_BaseOffset: 0
   m_WalkableMask: 4294967295

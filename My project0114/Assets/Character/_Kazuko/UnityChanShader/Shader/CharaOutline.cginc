@@ -28,6 +28,12 @@ float4 _MainTex_ST;
 // メインテクスチャ
 sampler2D _MainTex;
 
+sampler2D _DissolveTex;
+sampler2D _RampTex;
+
+float _DissolveThreshold;
+float _Width;
+
 struct v2f
 {
 	float4 pos : SV_POSITION;
@@ -100,11 +106,29 @@ inline float3_t SetSaturation(float3_t inColor, float_t inSaturation)
 // フラグメントシェーダ
 float4_t frag(v2f i) : COLOR
 {
+
+	float4 dissolveColor = tex2D(_DissolveTex, i.UV);
+    clip(dissolveColor.rgb - _DissolveThreshold);
+
+
 	float4_t mainMapColor = tex2D(_MainTex, i.UV);
 	
 	float3_t outlineColor = BRIGHTNESS_FACTOR 
 		* SetSaturation(mainMapColor.rgb, SATURATION_FACTOR)
 		* mainMapColor.rgb;
 	
-	return float4_t(outlineColor, mainMapColor.a) * _Color * _LightColor0; 
+	float4_t col = float4_t(outlineColor, mainMapColor.a) * _Color * _LightColor0;
+	float_t value = saturate((dissolveColor.r - _DissolveThreshold) * 10);
+
+    // float4_t rampColor = tex2D(_RampTex,fixed2(value-0.01,value-0.01));
+    float4_t rampColor = tex2D(_RampTex,fixed2(saturate(value-0.01),saturate(value-0.01)));
+
+	// float4_t col = tex2D(_MainTex, i.uv.xy);
+	col += rampColor;
+ 	// if (rampColor.r > 0)
+    // {
+    //    col = rampColor;
+    // }
+	// return float4_t(outlineColor, mainMapColor.a) * _Color * _LightColor0; 
+	return col;
 }

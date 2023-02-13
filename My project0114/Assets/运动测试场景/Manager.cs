@@ -12,14 +12,14 @@ public class Manager : MonoBehaviour
 
     private bool turn2apply = false;
 
-    private void Awake()
-    {
-        animator = controller.GetComponent<Animator>();
-        animator.applyRootMotion = false;
+    //private void Awake()
+    //{
+    //    animator = controller.GetComponent<Animator>();
+    //    animator.applyRootMotion = false;
 
-        controller.gameObject.SetActive(false);
-        //controller.GetComponent<NavMeshAgent>().enabled = false;
-    }
+    //    controller.gameObject.SetActive(false);
+    //    //controller.GetComponent<NavMeshAgent>().enabled = false;
+    //}
 
     void Start()
     {

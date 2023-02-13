@@ -13,6 +13,7 @@ public class ZombieController : MonoBehaviour
 {
     [SerializeField]
     private float m_maxHealth = 100f;
+    [SerializeField]
     private float m_curHealth = 100f;
 
     private float m_cylinderHeight = 1.6f;
@@ -35,7 +36,7 @@ public class ZombieController : MonoBehaviour
 
     private Vector3 m_Velocity;
 
-    private CharacterController controller;
+    //private CharacterController controller;
     private Animator animator;
     private Slider slider;
     private NavMeshAgent agent;
@@ -59,7 +60,7 @@ public class ZombieController : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         slider = SliderGO.GetComponent<Slider>();
         m_cylinderHeight = GetComponent<CharacterController>().height;
@@ -70,6 +71,20 @@ public class ZombieController : MonoBehaviour
 
         foreach (var clip in animator.runtimeAnimatorController.animationClips)
         {
+            void AddEvent(AnimationEvent e)
+            {
+                var eNames = clip.events.Select(item => item.functionName);
+
+                if (eNames.Contains(e.functionName))
+                {
+                    return;
+                }
+                else
+                {
+                    clip.AddEvent(e);
+                }
+            }
+
             if (clip.name.Equals("Zombie_Attack_3"))
             {
                 AnimationEvent ae1 = new() { functionName = "AttackStart", time = 0f };
@@ -82,27 +97,14 @@ public class ZombieController : MonoBehaviour
             }
             if (clip.name.Equals("Death_2"))
             {
-                AnimationEvent ae1 = new() { functionName = "DeathStart", time = 0f };
-                AnimationEvent ae2 = new() { functionName = "DeathEnd", time = clip.length };
+                AnimationEvent ae1 = new AnimationEvent() { functionName = "DeathStart", time = 0f };
+                AnimationEvent ae2 = new AnimationEvent() { functionName = "DeathEnd", time = clip.length };
                 AddEvent(ae1);
                 AddEvent(ae2);
             }
-
-            void AddEvent(AnimationEvent targetEvent)
-            {
-                bool isExist = false;
-                foreach (var ae in clip.events)
-                {
-                    if (ae.functionName.Equals(targetEvent.functionName))
-                    {
-                        isExist = true;
-                        break;
-                    }
-                }
-                if (!isExist)
-                    clip.AddEvent(targetEvent);
-            }
         }
+
+    
     }
 
     /// <summary>
@@ -142,8 +144,8 @@ public class ZombieController : MonoBehaviour
 
     public void SetAllCompStatus(bool status)
     {
-        controller.detectCollisions = status;
-        controller.enabled = status;
+        //controller.detectCollisions = status;
+        //controller.enabled = status;
         animator.enabled = status;
         agent.isStopped = status;
         agent.enabled = !status;
@@ -156,6 +158,8 @@ public class ZombieController : MonoBehaviour
     // 帧事件调用
     private void AttackStart()
     {
+        if (!PlayerController.instance)
+            return;
         agent.updateRotation = false;
         animator.rootRotation = Quaternion.LookRotation(PlayerController.instance.gameObject.transform.position - this.transform.position);
 
@@ -173,6 +177,9 @@ public class ZombieController : MonoBehaviour
 
     private void AttackEnd()
     {
+        if (!PlayerController.instance)
+            return;
+
         agent.updateRotation = true;
 
         transform.LookAt(PlayerController.instance.transform);
@@ -202,8 +209,6 @@ public class ZombieController : MonoBehaviour
         slider.value = m_curHealth / m_maxHealth;
     }
 
-    private bool hasInvoke;
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -215,7 +220,7 @@ public class ZombieController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (HUD_GO.activeInHierarchy)
+        if (HUD_GO.activeInHierarchy && PlayerController.instance)
         {
             // 画布看向的位置 应该是 摄像机指向画布的向量 在 摄像机forward平面上的投影向量 这个投影向量+摄像机自身的位置
             Transform playerCamTrans = PlayerController.instance.mainCamera.transform;
@@ -271,6 +276,8 @@ public class ZombieController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (IsDead)
+            return;
         Gizmos.color = Color.yellow;
         //绘制球形线框范围
         Gizmos.DrawWireSphere(transform.position, m_attackRadius);
@@ -281,16 +288,5 @@ public class ZombieController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 5f);
 
-        //if (Time.frameCount % 60 == 0)
-        //{
-        //    Task task = btree.FindTaskWithName("BT   Cor Seek"); // 直接复制行为树编辑器中的名字即可
-
-        //    GameObject go = btree.GetVariable("Player").GetValue() as GameObject;
-
-        //}
-        //if (!CanRotate)
-        //{
-        //    Debug.Log($"当前不能旋转！");
-        //}
     }
 }

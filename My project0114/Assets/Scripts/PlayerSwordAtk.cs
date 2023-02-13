@@ -42,6 +42,37 @@ public class PlayerSwordAtk : MonoBehaviour
     /// </summary>
     public void DoAttack(float atkRadius, float atkHeight)
     {
+        for (int i = 0; i < BattleManagerNew.instance.zombieList.Count; i++)
+        {
+            var item = BattleManagerNew.instance.zombieList[i];
+            if (item.AtkList.Contains(curAtkCmd))
+                continue;
+            if (!item.CanReceiveDamage)
+                continue;
+            Vector3 playerPosV3 = PlayerController.instance.gameObject.transform.position;
+            Vector3 enemyPosV3 = item.transform.position;
+
+            Vector2 playerPosV2 = new Vector2(playerPosV3.x, playerPosV3.z);
+            Vector2 enemyPosV2 = new Vector2(enemyPosV3.x, enemyPosV3.z);
+
+            // 先从Y轴俯视判断 下方的Pos均是脚底root的位置
+            float distSqr = (playerPosV2 - enemyPosV2).sqrMagnitude;
+            if (distSqr < atkRadius * atkRadius)
+            {
+                // 在判断Y轴方向差值 小于圆柱半径/2+僵尸圆柱半径/2 说明碰撞到
+                var deltaYLimitValue = atkHeight / 2 + item.CylinderHeight / 2;
+                float deltaY = enemyPosV3.y - playerPosV3.y;
+                deltaY = deltaY > 0 ? deltaY : -deltaY;
+                if (deltaY < deltaYLimitValue)
+                {
+                    // 说明在一次攻击指令中 触发器与僵尸进行了多次触发 直接返回
+
+                    Debug.Log($"{item.gameObject.name}被击打了");
+                    item.OnReceiveAnAttack(curAtkCmd);
+                }
+            }
+        }
+
         for (int i = 0; i < BattleManager.instance.zombieList.Count; i++)
         {
             var item = BattleManager.instance.zombieList[i];

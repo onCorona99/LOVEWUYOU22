@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
         }
 
         colliders = new Collider[MAX_COUNT];
-
     }
 
     // 帧事件调用
@@ -314,4 +313,45 @@ public class PlayerController : MonoBehaviour
 
     }
 
+}
+
+public class PlayerInfoData
+{
+    public string HeadImgPath;
+    public int Level;
+    public string ID;
+    public string Name;
+    public int GoldCount;
+
+    public void SetInfoData(string headImgPath, int level, string iD, string name, int goldCount)
+    {
+        HeadImgPath = headImgPath;
+        Level = level;
+        ID = iD;
+        Name = name;
+        GoldCount = goldCount;
+    }
+
+    public void SetInfoData(PlayData data)
+    {
+        HeadImgPath = data.HeadImgPath;
+        Level = data.Level;
+        ID = data.ID;
+        Name = data.Name;
+        GoldCount = data.GoldCount;
+    }
+
+    public PlayerInfoData(string headImgPath, int level, string iD, string name, int goldCount)
+    {
+        HeadImgPath = headImgPath;
+        Level = level;
+        ID = iD;
+        Name = name;
+        GoldCount = goldCount;
+    }
+
+    public PlayerInfoData()
+    {
+
+    }
 }
